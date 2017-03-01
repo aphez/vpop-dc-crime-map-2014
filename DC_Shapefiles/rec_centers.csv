@@ -1,0 +1,33 @@
+NAME,ADDRESS,type,Ward,Longitude,Latitude,SCHOOL_SIT,POOL,POOL_NAME,CHILD_CARE,SENIOR_SER,WEB_URL,PHONE,STATUS,Prob of Cost,Cost
+Anacostia Recreation Center,1800 ANACOSTIA DRIVE SE,RECREATION CENTER,8,-76.9831009,38.8726006,Kenilworth Elementary School,outdoor,Anacostia Fitness Pool, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=45,(202) 698-2250,Open,0,0
+Arboretum Community Center,2412 RAND PLACE NE,RECREATION CENTER,5,-76.971199,38.9137001,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=31,(202) 673-4507,Open,0,0
+Bald Eagle Recreation Center,100 JOLIET STREET SW,RECREATION CENTER,8,-77.0102005,38.8189011,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=46,(202) 645-3960,Open,0.75,1.166666667
+Barry Farm Recreation Center,1230 SUMNER ROAD SE,RECREATION CENTER,8,-76.9966965,38.8605995,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=47,(202) 730-0572,Open,0.477272727,0.5
+Benning Park Community Center,"SOUTHERN AVE. AND FABLE ST., SE",RECREATION CENTER,7,-76.9269028,38.8797989,no,outdoor + child,Benning Park Pool, , , ,(202) 341-6765,Open,0.321428571,0.666666667
+Benning Stoddert Community Center,100 STODDERT PLACE SE,RECREATION CENTER,7,-76.9481964,38.8888016,no,none,none, , , ,(202) 698-1873,Open,0.125,1
+Brentwood Recreation Center,2311 14TH STREET NE,RECREATION CENTER,5,-76.9829025,38.9210014,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=32,(202) 576-6667,Open,0.75,2.666666667
+Congress Heights Recreation Center,611 ALABAMA AVENUE SE,RECREATION CENTER,8,-76.9968033,38.8423004,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=48,(202) 645-3981,Open,0,0
+Deanwood Recreation Center,1350 49TH STREET NE,RECREATION CENTER,7,-76.9325027,38.9085007,no,indoor,Deanwood Aquatic Center, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=101,(202) 671-3077,Open,0.535714286,0.628333333
+Douglass Community Center,"2100 STANTON TERRACE, SE",RECREATION CENTER,8,-76.9777985,38.8526001,no,outdoor,Douglass Pool, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=49,(202) 645-3980,Open,0.5,0.611
+Dunbar Aquatic Center,1301 NEW JERSEY AVENUE NW,AQUATIC CENTER,5,-77.0147018,38.9085007,Dunbar Senior High School,indoor,Dunbar Aquatic Facility, , , ,(202) 673-4316,Open,0,0
+Edgewood Recreation Center,"THIRD & EVARTS STS., NE",RECREATION CENTER,5,-77.0019989,38.9247017,no,none,none, , , ,(202) 529-0788,Open,0,0
+Ferebee-Hope Recreation Center,3999 8TH STREET SE,RECREATION CENTER,8,-76.9952011,38.8324013,Ferebee-Hope Elementary School,indoor,Ferebee Hope Pool, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=50,(202) 645-3917,Open,0.6,0.333333333
+Fort Davis Community Center,1400 41ST STREET SE,RECREATION CENTER,7,-76.9447021,38.8692017,no,none,none, , , ,(202) 645-9212,Open,0,0
+Fort Lincoln Recreation Center,3100 FORT LINCOLN DRIVE NE,RECREATION CENTER,5,-76.9576035,38.9272995,no,indoor,Fort Lincoln Aquatic Center, , , ,(202) 576-6818,Open,0,0
+Fort Stanton Recreation Center,1812 ERIE STREET SE,RECREATION CENTER,8,-76.9788971,38.8577003,no,outdoor,Fort Stanton Pool, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=51,(202) 645-3970,Open,0.5,0.611
+Harry Thomas Sr. Recreation Center,1743 LINCOLN ROAD NE,RECREATION CENTER,5,-77.0078964,38.9140015,no,outdoor + child,Harry Thomas Pool, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=33,(202) 576-5642,Open,0,0
+Hillcrest Recreation Center,3100 DENVER STREET SE,RECREATION CENTER,7,-76.9626007,38.8586006,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=95,(202) 645-9200,Open,0,0.865
+Joseph H. Cole Recreation Center,1299 NEAL STREET NE,RECREATION CENTER,5,-76.9885025,38.9040985,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=34,(202) 724-4876,Open,0.75,0.791666667
+Kelly Miller Recreation Center,4900 BROOKS STREET NE,RECREATION CENTER,7,-76.9311981,38.8935013,no,outdoor + child,Kelly Miller Pool, , , ,(202) 724-5056,Open,0,0
+Kenilworth-Parkside Recreation Center,1300 44TH STREET NE,RECREATION CENTER,7,-76.9432983,38.9075012,no,none,none, , , ,(202) 258-6513,Open,0,0
+Langdon Park Community Center,2901 20TH STREET NE,RECREATION CENTER,5,-76.9757996,38.9267998,no,outdoor,Langdon Park Pool, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=35,(202) 576-6595,Open,0.75,2.666666667
+Lederer Gardens,4801 NANNIE HELEN BURROUGHS AVENUE NE,RECREATION CENTER,7,-76.9336014,38.8984985,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=133,(202) 727-8061,Open,0,0
+Malcolm X Recreation Center,1351 ALABAMA AVENUE SE,RECREATION CENTER,8,-76.9861984,38.8450012,Malcolm X Elementary School,none,none, , , ,(202) 997-5841,Open,0,0
+North Michigan Park Recreation Center,1333 EMERSON STREET NE,RECREATION CENTER,5,-76.9863968,38.9500008,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=36,(202) 541-3526,Open,0.25,0.333333333
+Oxon Run Recreation Center,4TH ST AND MISSISSIPPI AVE SE,RECREATION CENTER,8,-76.9988022,38.8366013,no,outdoor + child,Oxon Run Pool, , , ,(202) 645-3960,Open,0,0
+Ridge Road Recreation Center,810 RIDGE ROAD SE,RECREATION CENTER,7,-76.9412003,38.8769989,no,outdoor,Fort Dupont, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=97,(202) 645-3959,Open,0.75,1.166666667
+Southeast Tennis & Learning Center,701 MISSISSIPPI AVENUE SE,RECREATION CENTER,8,-76.9945984,38.838501,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=44,(202) 645-6242,Open,0.375,2.333333333
+Theodore Hagans Cultural Center,3201 FORT LINCOLN DRIVE NE,RECREATION CENTER,5,-76.9581985,38.9241982,no,outdoor + child,Theodore Hagans Pool, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=89,(202) 576-3017,Open,0,0
+Trinidad Recreation Center,1310 CHILDRESS STREET NE,RECREATION CENTER,5,-76.9826965,38.9062996,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=38,(202) 727-1293,Open,0.5,1.324
+Turkey Thicket Recreation Center,1100 MICHIGAN AVENUE NE,RECREATION CENTER,5,-76.9925995,38.9380989,no,indoor,Turkey Thicket Aquatic Center, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=39,(202) 576-9238,Open,0.541666667,0.574
+Watts Branch Recreation Center,6201 BANKS PLACE NE,RECREATION CENTER,7,-76.9123001,38.8917999,no,none,none, , ,http://app.dpr.dc.gov/dprmap/details.asp?cid=107,(202) 727-7432,Open,0,0

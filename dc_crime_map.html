@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<!--
+    VPOP DC Crime Map
+    built on Leaflet Visualization Base
+    
+    
+    This is meant to be a standards-compliant HTML5 document
+    Without the use of custom tags
+        Due to concerns about backwards-compatibility
+    And without default mimetype declarations
+        Due to concerns about readability and concision
+-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>VPOP DC Crime Map</title>
+    <link rel="icon" href="./images/favicon.png">
+    <link rel="stylesheet" href="./css/main.css">
+    
+    <!-- Allow Pinch Zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="./Leaflet/leaflet.css">
+    <script src="./Leaflet/leaflet.js"></script>
+    
+    <!-- D3 -->
+    <script src="d3/d3.js"></script>
+    
+    <!-- JQuery -->
+    <script src="./jquery/jquery-1.12.0.js"></script>
+    
+    <!-- insert plugins here -->
+    
+    <!-- Slider control -->
+    <link rel="stylesheet" href="./Leaflet.slider/leaflet-slider.css">
+    <script src="./Leaflet.slider/leaflet-slider.js"></script>
+
+    <!-- Zoom slider -->
+    <link rel="stylesheet" href="./Leaflet.zoomslider/L.Control.Zoomslider.css">
+    <script src="./Leaflet.zoomslider/L.Control.Zoomslider.js"></script>
+    
+    <!-- Leaflet.shapefile -->
+    <script src="./shapefile-js/shp.js"></script>
+    <script src="./Leaflet.shapefile/leaflet.shpfile.js"></script>
+
+    <!-- Leaflet.ExtraMarkers -->
+    <link rel="stylesheet" href="./Leaflet.extramarkers/css/leaflet.extra-markers.min.css">
+    <script src="./Leaflet.extramarkers/js/leaflet.extra-markers.min.js"></script>
+    
+    <!-- Leaflet-heat and data -->
+    <script src="./Leaflet-heat/leaflet-heat.js"></script>
+    
+    <!-- Semantic UI Dimmer -->
+    <script src="./semanticui/Dimmer/dimmer.js"></script>
+    <link rel="stylesheet" href="./semanticui/Dimmer/dimmer.css">
+    <link rel="stylesheet" href="./semanticui/Loader/loader.css">
+    
+    <!-- Leaflet.EasyButton -->
+    <link rel="stylesheet" href="./Leaflet.EasyButton/easy-button.css">
+    <script src="./Leaflet.EasyButton/easy-button.js"></script>
+
+
+<style>
+    .legend {
+			/*display:none;*/
+	    	position:absolute;
+	    	bottom:20px;
+	    	right:15px;
+	    	line-height: 18px;
+	    	color: #555;
+	    	border-radius: 10px;
+	    	background: rgba(255,255,255,0.8);
+	    	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	    	border-radius: 5px;
+	    	padding:10px;
+	    	width:195px;
+	    	font: 14px/16px Arial, Helvetica, sans-serif;
+	    	line-height: 18px;
+	    	color: #555;
+	    	}
+	.legend i {
+	        width: 18px;
+	        height: 18px;
+	        float: left;
+	        margin-right: 8px;
+	        opacity: 0.7;
+	    	}
+    .legend .scaletitle {
+        font-weight: bold;
+        font-size: small;
+    }
+    .legend .input {
+        font-weight: bold;
+        width: 18px;
+        float: left;
+        margin-right: 8px;
+    }
+    .ui.text.loader {
+        font-family: sans-serif;
+        font-size: x-small;
+    }
+    .btn-label {
+        font-size: large;
+        font-weight: bold;
+    }
+</style>
+    
+</head>
+<body>
+    <!-- BEGIN Loading Dimmer -->
+      <div class="ui inverted dimmer">
+        <div class="ui text loader">Loading</div>
+      </div>
+    <!--   END Loading Dimmer -->
+    
+    <div id="map"></div>   
+
+    	<div class="legend">
+            <div class="scaletitle">VPOP DC Crime - 2014</div><br>
+            <div class="input">r</div>Radius <span style="font-size:x-small">(tenths of a mile)</span><br>
+            <div class="input">cr</div>Crime display <span style="font-size:x-small">(%)</span><br>
+            <div class="input">&check;</div>Highlight violent crime</span><br>
+            <div class="input">wk</div>Week <span style="font-size:x-small">(of 52)</span><br>
+            <i style="background:#EFEFDD;opacity:1"></i>Population* of Wards 5,7,8<br>
+            <i style="background:#B5D2B6;opacity:1"></i>Park<br>
+            <i style="background:#FFF;opacity:1"></i>Pool or Rec Center<br>
+            <i style="background:#3F6384;opacity:0.2" id="legend_violent_crime"></i>Violent crime <span style="font-size:x-small">(lasts 14 days)</span><br>
+            <i style="background:#3F6384;opacity:0.2" id="legend_property_crime"></i>Property crime <span style="font-size:x-small">(lasts 7 days)</span><br>
+            <br>
+            <div style="font-size:x-small">* Synthetic population visible at two highest zoom levels</div>
+        </div>
+
+    <script>
+    
+    /* BEGIN Tile Layer Definitions */
+    var CartoDB_Positron_Insecure = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}'+(L.Browser.retina? '@2x': '')+'.png', {
+        maxZoom: 19,
+        noWrap: true,
+        subdomains: 'abcd',
+        detectRetina: true,
+        //errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAJOgAACToAYJjBRwAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII=',
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    });
+
+    var CartoDB_PositronNolabels_Insecure = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}'+(L.Browser.retina? '@2x': '')+'.png', {
+        maxZoom: 19,
+        noWrap: true,
+        subdomains: 'abcd',
+        detectRetina: true,
+        //errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAJOgAACToAYJjBRwAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII=',
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    });
+
+    var CartoDB_DarkMatter_Insecure = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}'+(L.Browser.retina? '@2x': '')+'.png', {
+        maxZoom: 19,
+        noWrap: true,
+        subdomains: 'abcd',
+        detectRetina: true,
+        //errorTileUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAJOgAACToAYJjBRwAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII=',
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    });
+    /*   END Tile Layer Definitions */
+    
+    // map defaults
+    var default_basemap = [CartoDB_PositronNolabels_Insecure];
+    var BaltimoreMD = [39.2861, -76.6296];
+    var WashingtonDC = [38.8845,-77.0063];
+    var default_location = WashingtonDC;
+    var default_zoom = 12;
+    
+    // initialize the map
+    var map = L.map('map', {
+        layers: default_basemap,
+        center: default_location,
+        zoomControl: false,
+        zoom: default_zoom
+    });
+    
+
+    // add a zoom slider
+    var map_zoom = map.addControl(new L.Control.Zoomslider());
+
+    // add a scale
+    var map_scale = L.control.scale({position: 'bottomleft'}).addTo(map);
+    
+    $('.dimmer').dimmer('show');
+    
+    var crimelayers = [];
+
+    var doneonce = false;
+    var currweek = 52;  // the week shown on startup - change to a week: 0-52
+    var lastweek = currweek;
+  
+    // Creates a white pin marker
+    var whiteMarker = L.ExtraMarkers.icon({
+        //icon: '',
+        markerColor: 'white',
+        shape: 'square'
+        //prefix: 'fa'
+    });
+    
+
+    var wardLayer = new L.FeatureGroup();
+    var shpfile = new L.Shapefile('./DC_Shapefiles/Ward5_7_8.zip', {
+        stroke: false,
+        color: '#FFF9A8'
+    });
+    shpfile.addTo(wardLayer);
+    wardLayer.addTo(map);
+
+
+    // Add DC synthetic population
+    var heatmapLayer;
+    d3.csv("./data/dc_wards578_people.csv", function(data) {
+        var addressPoints = [];
+        data.forEach(function(d) {
+            addressPoints.push([+d.latitude, +d.longitude]);
+            if (+d.longitude < -77.028625) {
+                new L.marker([+d.latitude, +d.longitude]).bindPopup(d.latitude + ", " + d.longitude).addTo(map);
+            }
+        });
+        heatmapLayer = L.heatLayer(addressPoints,{gradient: {0.4: '#ccc', 1: '#EFEFDD'}, minOpacity: 0.01, });
+    });
+    
+    map.on('zoomend', function () {
+        if (map.getZoom() >= 17) {
+            if (!map.hasLayer(heatmapLayer)) {
+                map.addLayer(heatmapLayer);
+                document.getElementsByClassName("leaflet-heatmap-layer")[0].style.zIndex = -1;
+                map.removeLayer(wardLayer);
+            }
+        }
+        if (map.getZoom() < 17) {
+            if (map.hasLayer(heatmapLayer)) {
+                map.removeLayer(heatmapLayer);
+                map.addLayer(wardLayer);
+                wardLayer.bringToBack();
+            }
+        }
+    });
+
+    // Add rec_center pins
+    d3.csv("./DC_Shapefiles/rec_centers.csv", function(data) {
+      data.forEach(function(d) {
+        d.Longitude = +d.Longitude;
+        d.Latitude = +d.Latitude;
+        var marker = L.marker([d.Latitude, d.Longitude],{icon: whiteMarker}).bindPopup(Object.keys(d).map(function(k) {return k + ": " + d[k];}).join("<br>"),{maxHeight: 200}).addTo(map);
+      });
+    });
+
+    // Add pools pins
+    d3.csv("./DC_Shapefiles/outdoor_pools.csv", function(data) {
+      data.forEach(function(d) {
+        d.Longitude = +d.Longitude;
+        d.Latitude = +d.Latitude;
+        var marker = L.marker([d.Latitude, d.Longitude],{icon: whiteMarker}).bindPopup(Object.keys(d).map(function(k) {return k + ": " + d[k];}).join("<br>"),{maxHeight: 200}).addTo(map);
+      });
+    });
+    
+    var shpfile = new L.Shapefile('./DC_Shapefiles/DCParks.zip', {
+        stroke: false,
+        color: 'green',
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                    return k + ": " + feature.properties[k];
+                }).join("<br>"), {
+                    maxHeight: 200
+                });
+            }
+        }
+    });
+    shpfile.addTo(map);
+    
+    var shpfile = new L.Shapefile('./DC_Shapefiles/NationalParks.zip', {
+        stroke: false,
+        color: 'green',
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                    return k + ": " + feature.properties[k];
+                }).join("<br>"), {
+                    maxHeight: 200
+                });
+            }
+        }
+    });
+    shpfile.addTo(map);
+
+    var shpfile = new L.Shapefile('./DC_Shapefiles/BikeLanes.zip', {
+        stroke: false,
+        color: 'green',
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                    return k + ": " + feature.properties[k];
+                }).join("<br>"), {
+                    maxHeight: 200
+                });
+            }
+        }
+    });
+    shpfile.addTo(map);
+
+    var shpfile = new L.Shapefile('./DC_Shapefiles/BikeTrails.zip', {
+        stroke: false,
+        color: 'green',
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                    return k + ": " + feature.properties[k];
+                }).join("<br>"), {
+                    maxHeight: 200
+                });
+            }
+        }
+    });
+    shpfile.addTo(map);
+
+    var shpfile = new L.Shapefile('./DC_Shapefiles/WoodedAreas.zip', {
+        stroke: false,
+        color: 'green',
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                    return k + ": " + feature.properties[k];
+                }).join("<br>"), {
+                    maxHeight: 200
+                });
+            }
+        }
+    });
+    shpfile.addTo(map);
+
+/*    
+    var shpfile = new L.Shapefile('./DC_Shapefiles/tl_2010_11001_areawater.zip', {
+        stroke: false,
+        color: 'red',
+        onEachFeature: function(feature, layer) {
+            if (feature.properties) {
+                layer.bindPopup(Object.keys(feature.properties).map(function(k) {
+                    return k + ": " + feature.properties[k];
+                }).join("<br>"), {
+                    maxHeight: 200
+                });
+            }
+        }
+    });
+    shpfile.addTo(map);
+*/
+
+    // Add DC crime radii
+    d3.csv("./data/dc_crime.csv", function(data) {
+        for (i = 0; i <= 52; i++) {
+            var layerCrimes = new L.FeatureGroup();
+            data.forEach(function(d) {
+                d.Longitude = +d.Longitude;
+                d.Latitude = +d.Latitude;
+                violent_crimes = ['ASSAULT W/DANGEROUS WEAPON', 'HOMICIDE', 'ROBBERY', 'SEX ABUSE']
+                property_crimes = ['ARSON', 'BURGLARY', 'MOTOR VEHICLE THEFT', 'THEFT F/AUTO', 'THEFT/OTHER']
+                if (violent_crimes.indexOf(d.OFFENSE) >= 0) {
+                    duration = 14;
+                    color = '#3F6384';
+                    violent = true;
+                }
+                if (property_crimes.indexOf(d.OFFENSE) >= 0) {
+                    duration = 7;
+                    color = '#3F6384';
+                    violent = false;
+                }
+                startdate = new Date(d.REPORTDATETIME.split('T')[0]);
+                enddate = d3.time.day.offset(startdate, duration)
+                var currdate = d3.time.day.offset(new Date('2014-01-01'), 7*i)
+                
+                if ((currdate >= startdate) && (currdate <= enddate)) {
+                    var newSite = new L.Circle([d.Latitude,d.Longitude], 0.1 * 1609.344,
+                                            {stroke: false, color: color}
+                                        ).bindPopup(Object.keys(d).map(function(k) {return k + ": " + d[k];}).join("<br>"),{maxHeight: 200});
+                    newSite.violent = violent;
+                    newSite.addTo(layerCrimes); 
+                }
+                
+            });        
+            crimelayers.push(layerCrimes);
+            if (!doneonce && (i==52)) {
+                doneonce = true;
+                // Show week 0 crime first
+                map.addLayer(crimelayers[currweek]);
+                $('.dimmer').dimmer('hide');
+            }
+        }
+    });
+
+  
+    radiusSlider = L.control.slider(function (){},{id:"radiusSlider"});
+    radiusSlider.options.position = "topleft";
+    radiusSlider.options.orientation = "vertical";
+    radiusSlider.options.logo = "r";
+    radiusSlider.options.increment = true;
+    radiusSlider.options.min = 1;
+    radiusSlider.options.max = 6;
+    radiusSlider.options.value = 1;
+    radiusSlider.addTo(map);
+    radiusSlider.update = onRadiusSliderChange;
+    //document.getElementsByClassName("leaflet-control-slider-value")[0].text = 0.1
+
+    function onRadiusSliderChange(value) {
+        /*for(i in crimelayers[currweek]) { crimelayers[currweek][i].setRadius(value*1609.344); }*/
+        crimelayers.forEach(function(week) {
+            week.eachLayer(function (layer) {layer.setRadius(value/10*1609.344)});
+        } );
+        //document.getElementsByClassName("leaflet-control-slider-value")[0].text = value / 10
+        //console.log(value);
+        //crimelayers[currweek]
+        
+    }
+
+    weekSlider = L.control.slider(function (){},{id:"weekSlider"});
+    weekSlider.options.position = "bottomleft";
+    weekSlider.options.orientation = "horizontal";
+    weekSlider.options.logo = "wk";
+    weekSlider.options.increment = true;
+    weekSlider.options.min = 0;
+    weekSlider.options.max = 52;
+    weekSlider.options.value = currweek;
+    weekSlider.addTo(map);
+    //document.getElementsByClassName("leaflet-control-slider-toggle")[1].text = currweek
+    //$(".leaflet-control-slider-toggle").css({"font-size":"1.1em"})
+    weekSlider.update = onWeekSliderChange;
+    
+    
+    function onWeekSliderChange(value) {
+        currweek = value;
+        if (lastweek!=currweek) {
+            map.removeLayer(crimelayers[lastweek]);
+            map.addLayer(crimelayers[currweek]);
+            //document.getElementsByClassName("leaflet-control-slider-toggle")[1].text = currweek
+        }
+        lastweek = currweek;
+    }
+    
+    opacitySlider = L.control.slider(function(value) {
+                        crimelayers.forEach(function(week) {
+                            week.eachLayer(function (layer) {
+                                layer.setStyle({fillOpacity:value/100});
+                                document.getElementById("legend_violent_crime").style.opacity = value/100;
+                                document.getElementById("legend_property_crime").style.opacity = value/100;
+                            });
+                        } );
+                    },{id:"opacitySlider"});
+    opacitySlider.options.position = "topleft";
+    opacitySlider.options.orientation = "vertical";
+    opacitySlider.options.logo = "cr";
+    opacitySlider.options.increment = true;
+    opacitySlider.options.min = 1;
+    opacitySlider.options.max = 100;
+    opacitySlider.options.value = 20;
+    opacitySlider.addTo(map);
+
+
+    var stateChangingButton = L.easyButton({
+        states: [{
+                stateName: 'highlight-violent',   // name the state
+                icon:      '<span class="btn-label">&check;</span>',          // and define its properties
+                title:     'Highlight violent crimes', // like its title
+                onClick: function(btn, map) {  // and its callback
+                    crimelayers.forEach(function(week) {
+                        week.eachLayer(function (layer) {
+                            if (layer.violent) {
+                                layer.setStyle({color:'#774343',fillColor:'#774343'});
+                            }
+                        });
+                    });
+                    document.getElementById("legend_violent_crime").style.background= "#774343";
+                    btn.state('nolight-violent'); // change state on click!
+                }
+            }, {
+                stateName: 'nolight-violent',
+                icon:      '<span class="btn-label">&cross;</span>',
+                title:     'Unhighlight violent crimes',
+                onClick: function(btn, map) {
+                    crimelayers.forEach(function(week) {
+                        week.eachLayer(function (layer) {
+                            if (layer.violent) {
+                                layer.setStyle({color:'#3F6384',fillColor:'#3F6384'});
+                            }
+                        });
+                    });
+                    document.getElementById("legend_violent_crime").style.background= "#3F6384";
+                    btn.state('highlight-violent');
+                }
+        }]
+    });
+    stateChangingButton.addTo(map);
+    $(".easy-button-button").css({'width':'36px','height':'36px'});
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+/*
+    Main SIGMA Stylesheet
+    Meant to be standards-compliant CSS3
+*/
+
+/* BEGIN Fullscreen Leaflet
+    source: http://www.d3noob.org/2014/02/make-your-leafletjs-map-full-screen.html*/
+body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 100%;
+    width: 100%;
+}
+/*   END Fullscreen Leaflet */

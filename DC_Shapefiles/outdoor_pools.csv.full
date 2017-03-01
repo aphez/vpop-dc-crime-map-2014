@@ -1,0 +1,10 @@
+NAME,ADDRESS,type,Ward,Longitude,Latitude,SCHOOL_SIT,POOL,POOL_NAME,CHILD_CARE,SENIOR_SER,WEB_URL,PHONE,STATUS
+Barry Farm Pool,1230 SUMNER ROAD SE,POOL,8,-76.9965973,38.8614006,no,outdoor,Barry Farm Pool, , , ,(202) 730-0572,Open
+Douglass Pool,"FREDERICK DOUGLASS CT. AND STANTON TER., SE",POOL,8,-76.9770966,38.8527985,no,outdoor + child,Douglass Pool, , , ,(202) 645-5045,Open
+East Potomac Pool,972 OHIO DRIVE SW,POOL,2,-77.0274963,38.8745995,no,outdoor,East Potomac Pool, , , ,(202) 727-6523,Open
+Fort Dupont Pool,RIDGE RD AND BURNS ST SE,POOL,7,-76.9401016,38.8762016,no,outdoor,Fort Dupont Pool, , , ,(202) 645-5046,Open
+Fort Stanton Pool,1800 ERIE STREET SE,POOL,8,-76.9779968,38.8577003,no,outdoor,Fort Stanton Pool, , , ,(202) 645-5047,Open
+Francis Pool,2435 N STREET NW,POOL,2,-77.0538025,38.907299,no,outdoor,Francis Pool, , , ,(202) 727-3285,Open
+Kelly Miller Pool,4900 BROOKS STREET NE,POOL,7,-76.9309998,38.8936005,no,outdoor + child,Kelly Miller Pool, , , ,(202) 724-5056,Open
+Langdon Park Pool,"MILLS AVE. AND HAMLIN ST., NE",POOL,5,-76.9737015,38.9267998,no,outdoor + child,Langdon Park Pool, , , ,(202) 576-8655,Open
+Upshur Pool,4300 ARKANSAS AVENUE NW,POOL,4,-77.0314026,38.9441986,no,outdoor + child,Upshur Pool, , , ,(202) 576-8661,Open
